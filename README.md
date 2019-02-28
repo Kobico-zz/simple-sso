@@ -11,7 +11,7 @@ set hosts: (add to /etc/hosts file)
 
 on a local directory, run:
 <br>
-git clone https://github.com/Kobico/simple-sso.git && npm start
+git clone https://github.com/Kobico/simple-sso.git && cd simple-sso && npm start
 
 <br>
 
