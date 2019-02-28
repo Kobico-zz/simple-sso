@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var keys = {
+            'eu1-prefix.sso-child3.soa': '3_YCHAFwI50plWunlml-k7xor0fYhCGQLXltzvHtR4peDhntq1SkAUXg8E1gzVsBWC',
+            'eu1.sso-child2.soa': '3_8R4r4TU5rQ1Yhs6JBoKbEcbUxUB4kSzBL7ZU-72rdYMSsmSY-qCJtG_0XzskzrUJ'
+        };
+        if(Object.keys(keys).indexOf(location.hostname) === -1) {
+            throw 'Wrong top domain, should be one of those: ' + Object.keys(keys).join(', ');
+        } else {
+            var key = keys[location.hostname];
+            var script = document.createElement('script');
+            script.src = "https://cdns.gigya.com/js/gigya.js?apiKey=" + key;
+            document.head.appendChild(script);
+        }
+    </script>
+    <title>Simple sso</title>
+</head>
+<body>
+    <div id="output"></div>
+    <script>
+        function showOutput(o) {
+            document.getElementById('output').innerHTML = o;
+        }
+        function renderUser(profile) {
+            showOutput(JSON.stringify({firstName: profile.firstName, lastName: profile.lastName}));
+        }
+        function onAccountInfo(res) {
+            if(res.errorCode !== 0) {
+                showOutput('not connected');
+                gigya.accounts.showScreenSet({screenSet:'Default-RegistrationLogin', startScreen: 'gigya-login-screen'});
+            } else {
+                renderUser(res.profile);
+            }
+        }
+        function onGigyaServiceReady() {
+            gigya.accounts.addEventHandlers({onLogin: function(e) {
+                    renderUser(e.profile || e);
+                }});
+            gigya.accounts.getAccountInfo({callback:onAccountInfo});
+        }
+    </script>
+</body>
+</html>
