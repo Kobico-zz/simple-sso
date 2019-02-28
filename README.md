@@ -4,7 +4,9 @@ gigya SSO simple implementation for testing purpose
 set hosts: (add to /etc/hosts file)
 
 127.0.0.1	eu1-prefix.sso-child3.soa
+</br>
 127.0.0.1	eu1.sso-child2.soa
+</br>
 52.30.9.119	login.eu1-prefix.sso-child3.soa
 
 on a local directory, run:
